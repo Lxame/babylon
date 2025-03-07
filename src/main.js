@@ -228,14 +228,6 @@ const coordScene = function () {
 	return scene;
 };
 
-class Point3D {
-	constructor(x, y, z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-	}
-}
-
 const cubeSkeletonScene = function (size) {
 	var scene = new BABYLON.Scene(engine);
 
@@ -261,9 +253,6 @@ const cubeSkeletonScene = function (size) {
 	const pointsArr = [];
 	const points = []
 	for (let i = 0; i < vertixData.length; i += 3) {
-		const p = new Point3D(vertixData[i], vertixData[i + 1], vertixData[i + 2]);
-		pointsArr.push(p);
-
 		const v = new BABYLON.Vector3(vertixData[i], vertixData[i + 1], vertixData[i + 2]);
 		points.push(v);
 	}
@@ -275,15 +264,25 @@ const cubeSkeletonScene = function (size) {
     return scene;
 }
 
-
-
 // const scene = createScene();
+// const coord = coordScene();
 
-const cube = cubeSkeletonScene(2);
-
-const coord = coordScene();
+const cubeScene = cubeSkeletonScene(2);
 
 engine.runRenderLoop(() => {
-    //coord.render();
-	cube.render();
+	cubeScene.render();
 })
+
+cubeScene.onKeyboardObservable.add((kbInfo) => {
+    switch (kbInfo.type) {
+      case BABYLON.KeyboardEventTypes.KEYDOWN:
+        console.log("KEY DOWN: ", kbInfo.event.key);
+        if (kbInfo.event.key === "w") {
+            console.log("WW");
+        }
+        break;
+      case BABYLON.KeyboardEventTypes.KEYUP:
+        console.log("KEY UP: ", kbInfo.event.code);
+        break;
+    }
+  });
