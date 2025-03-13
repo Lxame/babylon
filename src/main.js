@@ -1,4 +1,4 @@
-import { addCoordInScene } from "./utils.js";
+import { addCoordInScene, addMovementToMesh } from "./utils.js";
 
 const canvas = document.querySelector("#game-canvas");
 const engine = new BABYLON.Engine(canvas, true, { stencil: true }, true);
@@ -41,44 +41,8 @@ const cubeSkeletonScene = function (size) {
 }
 
 const cubeScene = cubeSkeletonScene(2);
+addMovementToMesh(cubeScene, cubeSkelet);
 
 engine.runRenderLoop(() => {
 	cubeScene.render();
 })
-
-cubeScene.onKeyboardObservable.add((kbInfo) => {
-    switch (kbInfo.type) {
-        case BABYLON.KeyboardEventTypes.KEYDOWN:
-            console.log("KEY DOWN: ", kbInfo.event.key);
-            switch (kbInfo.event.key) {
-                case "a":
-                case "A":
-                    cubeSkelet.position.x -= 0.1;
-                    break
-                case "d":
-                case "D":
-                    cubeSkelet.position.x += 0.1;
-                break
-                case "w":
-                case "W":
-                    cubeSkelet.position.y += 0.1;
-                    break
-                case "s":
-                case "S":
-                    cubeSkelet.position.y -= 0.1;
-                    break
-                case "q":
-                case "Q":
-                    cubeSkelet.position.z -= 0.1;
-                    break
-                case "e":
-                case "E":
-                    cubeSkelet.position.z += 0.1;
-                    break                
-            }
-            break;
-        case BABYLON.KeyboardEventTypes.KEYUP:
-            console.log("KEY UP: ", kbInfo.event.code);
-            break;
-    }
-});

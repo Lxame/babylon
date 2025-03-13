@@ -23,3 +23,42 @@ export function addCoordInScene (scene, size) {
     //var zChar = makeTextPlane("Z", "blue", size / 10);
     //zChar.position = new BABYLON.Vector3(0, 0.05 * size, 0.9 * size);
 }
+
+export function addMovementToMesh(scene, mesh) {
+    scene.onKeyboardObservable.add((kbInfo) => {
+        switch (kbInfo.type) {
+            case BABYLON.KeyboardEventTypes.KEYDOWN:
+                console.log("KEY DOWN: ", kbInfo.event.key);
+                switch (kbInfo.event.key) {
+                    case "a":
+                    case "A":
+                        mesh.position.x -= 0.1;
+                        break
+                    case "d":
+                    case "D":
+                        mesh.position.x += 0.1;
+                    break
+                    case "w":
+                    case "W":
+                        mesh.position.y += 0.1;
+                        break
+                    case "s":
+                    case "S":
+                        mesh.position.y -= 0.1;
+                        break
+                    case "q":
+                    case "Q":
+                        mesh.position.z -= 0.1;
+                        break
+                    case "e":
+                    case "E":
+                        mesh.position.z += 0.1;
+                        break                
+                }
+                break;
+            case BABYLON.KeyboardEventTypes.KEYUP:
+                console.log("KEY UP: ", kbInfo.event.code);
+                break;
+        }
+    });
+}
