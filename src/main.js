@@ -3,8 +3,6 @@ import { addCoordInScene, addMovementToMesh } from "./utils.js";
 const canvas = document.querySelector("#game-canvas");
 const engine = new BABYLON.Engine(canvas, true, { stencil: true }, true);
 
-let cubeSkelet;
-
 const cubeSkeletonScene = function (size) {
 	var scene = new BABYLON.Scene(engine);
 
@@ -34,14 +32,14 @@ const cubeSkeletonScene = function (size) {
 	}
 	console.log(pointsArr);
 
-	cubeSkelet = BABYLON.Mesh.CreateLines("cubeSkelet", points, scene);
+	const cubeSkelet = BABYLON.Mesh.CreateLines("cubeSkelet", points, scene);
 	cubeSkelet.color = new BABYLON.Color3(0, 0, 0);
+	addMovementToMesh(scene, cubeSkelet);
 
     return scene;
 }
 
 const cubeScene = cubeSkeletonScene(2);
-addMovementToMesh(cubeScene, cubeSkelet);
 
 engine.runRenderLoop(() => {
 	cubeScene.render();
